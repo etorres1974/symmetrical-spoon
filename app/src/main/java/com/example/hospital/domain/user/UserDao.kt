@@ -1,4 +1,4 @@
-package com.example.hospital.domain
+package com.example.hospital.domain.user
 
 import androidx.room.Dao
 import androidx.room.Delete
