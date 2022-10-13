@@ -1,7 +1,6 @@
-package com.example.hospital.domain.especialidade
+package com.example.hospital.data.especialidade
 
 import androidx.room.*
-import com.example.hospital.domain.medico.MedicoEspecialidade
 
 @Dao
 interface EspecialidadeDao {

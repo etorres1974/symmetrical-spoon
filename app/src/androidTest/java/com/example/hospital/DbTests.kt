@@ -5,11 +5,11 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.hospital.domain.AppDatabase
-import com.example.hospital.domain.especialidade.Especialidade
-import com.example.hospital.domain.medico.Medico
-import com.example.hospital.domain.user.User
-import com.example.hospital.domain.user.UserDao
+import com.example.hospital.data.AppDatabase
+import com.example.hospital.data.especialidade.Especialidade
+import com.example.hospital.data.medico.Medico
+import com.example.hospital.data.user.User
+import com.example.hospital.data.user.UserDao
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Before
@@ -18,7 +18,7 @@ import org.junit.runner.RunWith
 import java.io.IOException
 
 @RunWith(AndroidJUnit4::class)
-class SimpleEntityReadWriteTest {
+class DbTests {
     private lateinit var userDao: UserDao
     private lateinit var db: AppDatabase
 
@@ -53,7 +53,10 @@ class SimpleEntityReadWriteTest {
 
         assert(dao.getAll().isEmpty())
         dao.insert(especialidade)
-        assert(dao.getAll().first() == especialidade)
+        val result = dao.getAll().first()
+        assert(result == especialidade){
+            "Esperava : ${especialidade.descricao } /n Recebeu ${result.descricao}"
+        }
 
         especialidade.descricao = "Dentista"
         dao.update(especialidade)
@@ -65,7 +68,7 @@ class SimpleEntityReadWriteTest {
     fun chave_estrangeira(){
         val dao = db.especialidade()
         val md = db.medicoDao()
-        dao.insert( Especialidade( "Ortopedista"))
+        dao.insert( Especialidade( 0, "Ortopedista"))
         val orto = dao.getAll().first()
         val mario = Medico.instance(orto, "Mario Mario", null, null)
         val luigi = Medico.instance(orto, "Luigi Luigi", null, null)

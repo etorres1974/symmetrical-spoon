@@ -1,4 +1,4 @@
-package com.example.hospital.domain.medico
+package com.example.hospital.data.medico
 
 import androidx.room.*
 
@@ -28,6 +28,11 @@ interface MedicoDao {
     @Delete
     fun delete(medico: Medico)
 
+    @Query("DELETE from medico where id == :id")
+    fun deleteById(id : Int) : Int
+
+    @Update
+    fun update(medico: Medico)
 
 }
 

@@ -1,4 +1,4 @@
-package com.example.hospital.domain.user
+package com.example.hospital.data.user
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

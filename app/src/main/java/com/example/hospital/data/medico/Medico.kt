@@ -1,7 +1,7 @@
-package com.example.hospital.domain.medico
+package com.example.hospital.data.medico
 
 import androidx.room.*
-import com.example.hospital.domain.especialidade.Especialidade
+import com.example.hospital.data.especialidade.Especialidade
 
 @Entity(foreignKeys = [ForeignKey(
     entity = Especialidade::class,
@@ -20,8 +20,8 @@ data class Medico(
 ){
 
     companion object{
-        fun instance(especialidade: Especialidade, fullName : String, telefone: String?, address: Address?) = Medico(
-            id = 0,
+        fun instance(especialidade: Especialidade, fullName : String, telefone: String? = null, address: Address? = null,id : Int? = 0) = Medico(
+            id = id ?: 0,
             especId = especialidade.id,
             firstName = fullName.split(" ").first(),
             lastName = fullName.split(" ").last(),
