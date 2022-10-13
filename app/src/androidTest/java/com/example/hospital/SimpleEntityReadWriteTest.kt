@@ -60,4 +60,27 @@ class SimpleEntityReadWriteTest {
         val resultado =  dao.getAll().first().descricao
         assert(resultado == "Dentista"){ "Deverria ser dentista porem veio $resultado" }
     }
+
+    @Test
+    fun chave_estrangeira(){
+        val dao = db.especialidade()
+        val md = db.medicoDao()
+        dao.insert( Especialidade( "Ortopedista"))
+        val orto = dao.getAll().first()
+        val mario = Medico.instance(orto, "Mario Mario", null, null)
+        val luigi = Medico.instance(orto, "Luigi Luigi", null, null)
+        md.insert(mario)
+        md.insert(luigi)
+
+        val x = md.getAllMedicosEspecialidade()
+        val medicos = x.map { it.medico }
+        assert(medicos.any { it.firstName == mario.firstName })
+        assert(medicos.any { it.firstName == luigi.firstName })
+
+        val result = md.findMedEspec("Mario", "")
+        assert(result.medico.firstName == mario.firstName){
+            "Estava esperando o Mario, porem veio ${result.medico.firstName}"
+        }
+
+    }
 }
