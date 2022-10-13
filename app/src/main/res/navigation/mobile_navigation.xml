@@ -12,14 +12,14 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.example.hospital.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:id="@+id/navigation_medico"
+        android:name="com.example.hospital.ui.medico.MedicoFragment"
+        android:label="@string/title_medico"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.hospital.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
+        android:id="@+id/navigation_especialidade"
+        android:name="com.example.hospital.ui.especialidade.EspecialidadeFragment"
+        android:label="@string/title_especialidade"
         tools:layout="@layout/fragment_notifications" />
 </navigation>
