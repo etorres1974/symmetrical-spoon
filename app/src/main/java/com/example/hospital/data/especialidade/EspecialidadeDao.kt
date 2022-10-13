@@ -19,6 +19,9 @@ interface EspecialidadeDao {
     @Delete
     fun delete(especialidade: Especialidade)
 
+    @Query("DELETE from especialidade where id == :id")
+    fun deleteById(id : Int) : Int
+
     @Update
     fun update(especialidade: Especialidade)
 }

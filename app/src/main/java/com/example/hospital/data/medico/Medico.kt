@@ -7,7 +7,7 @@ import com.example.hospital.data.especialidade.Especialidade
     entity = Especialidade::class,
     parentColumns = arrayOf("id"),
     childColumns = arrayOf("especId"),
-    onDelete = ForeignKey.NO_ACTION
+    onDelete = ForeignKey.RESTRICT
 )]
 )
 data class Medico(
