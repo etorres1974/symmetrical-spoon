@@ -34,6 +34,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun initDatabase(){
-
+        this.applicationContext
     }
 }

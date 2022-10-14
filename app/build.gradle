@@ -37,6 +37,8 @@ android {
 
 dependencies {
     def roomVersion = "2.4.1"
+    def koinVersion = "3.2.2"
+    implementation "io.insert-koin:koin-android:$koinVersion"
 
     implementation("androidx.room:room-runtime:$roomVersion")
     //annotationProcessor("androidx.room:room-compiler:$roomVersion")

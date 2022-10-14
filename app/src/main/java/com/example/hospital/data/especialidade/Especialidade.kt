@@ -8,4 +8,6 @@ import androidx.room.PrimaryKey
 data class Especialidade(
     @PrimaryKey(autoGenerate = true) var id: Int = 0,
     @ColumnInfo(name = "descricao") var descricao: String,
-)
+){
+    override fun toString(): String = descricao
+}
