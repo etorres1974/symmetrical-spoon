@@ -3,8 +3,11 @@ package com.example.hospital
 import android.os.Bundle
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.example.hospital.data.especialidade.Especialidade
@@ -36,5 +39,17 @@ class MainActivity : AppCompatActivity() {
         medicoViewModel.setupInitialData()
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        navView.setOnItemSelectedListener { item ->
+            //NavigationUI.onNavDestinationSelected(item, navController)
+            navController.navigate(item.itemId)
+            return@setOnItemSelectedListener true
+        }
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            when (destination.id) {
+                R.id.navigation_home -> {}
+                R.id.navigation_medico -> {}
+                R.id.navigation_especialidade-> {}
+            }
+        }
     }
 }

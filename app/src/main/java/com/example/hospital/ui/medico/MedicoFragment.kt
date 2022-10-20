@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.hospital.data.especialidade.Especialidade
 import com.example.hospital.data.medico.Address
+import com.example.hospital.data.medico.Medico
 import com.example.hospital.databinding.FragmentMedicoBinding
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -37,6 +38,7 @@ class MedicoFragment : Fragment() {
         binding.fab.setOnClickListener {
             adicionarMedico()
         }
+        Log.d("Teste123 args", getMedicoArgs().toString())
     }
 
     private fun setupSpinner(list: List<Especialidade>) {
@@ -85,4 +87,6 @@ class MedicoFragment : Fragment() {
     fun showToast(text : String){
         Toast.makeText(requireContext(), text, Toast.LENGTH_SHORT).show()
     }
+
+    fun getMedicoArgs() : Medico? = arguments?.getSerializable("medico") as? Medico
 }

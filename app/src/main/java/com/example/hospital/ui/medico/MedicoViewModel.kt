@@ -57,6 +57,8 @@ class MedicoViewModel(
     fun removerMedico(id : Int){
         viewModelScope.launch(Dispatchers.IO) {
             medicoRepository.remover(id)
+            val medicos = medicoRepository.getAll()
+            medicoLivedata.postValue(medicos)
         }
     }
 
