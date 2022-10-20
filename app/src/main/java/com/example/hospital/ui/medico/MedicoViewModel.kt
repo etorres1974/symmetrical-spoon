@@ -45,6 +45,7 @@ class MedicoViewModel(
     fun editarMedico(id : Int, especialidade: Especialidade, fullName : String, telefone: String?, address: Address?){
         viewModelScope.launch(Dispatchers.IO) {
             medicoRepository.editar(id, especialidade, fullName, telefone, address)
+            medicoLivedata.postValue(medicoRepository.getAll())
         }
     }
 

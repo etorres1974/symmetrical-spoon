@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.hospital.R
 import com.example.hospital.data.especialidade.Especialidade
 import com.example.hospital.data.medico.Address
 import com.example.hospital.data.medico.Medico
@@ -38,7 +39,33 @@ class MedicoFragment : Fragment() {
         binding.fab.setOnClickListener {
             adicionarMedico()
         }
-        Log.d("Teste123 args", getMedicoArgs().toString())
+        val medico = getMedicoArgs()
+        if(medico == null)
+            setupAdd()
+        else
+            setupEdit(medico)
+    }
+
+    fun setupAdd(){
+        binding.tvTitulo.setText("Adicionar Médico")
+        binding.fab.setImageResource(R.drawable.ic_baseline_add_24)
+        clearInputs()
+    }
+
+    fun setupEdit(medico: Medico){
+        binding.tvTitulo.setText("Editar Médico")
+        binding.fab.setImageResource(R.drawable.ic_baseline_edit_24)
+        with(binding){
+            etNome.setText(medico.firstName)
+            etSobrenome.setText(medico.lastName)
+            etRua.setText(medico.address?.street)
+            etCidade.setText(medico.address?.city)
+            etEstado.setText(medico.address?.state)
+            etTelefone.setText(medico.telefone)
+            spinnerEspecialidades.post {
+               spinnerEspecialidades.setSelection(medico.especId)
+           }
+        }
     }
 
     private fun setupSpinner(list: List<Especialidade>) {
@@ -56,23 +83,41 @@ class MedicoFragment : Fragment() {
             binding.spinnerEspecialidades.requestFocus()
             showToast("Especialidade é um campo obrigatorio")
         }else {
-            (spinnerEspecialidades.selectedItem as? Especialidade)?.let { especialidade ->
-                medicoViewModel.adicionarMedico(
-                    especialidade = especialidade,
-                    fullName = etNome.text.toString() + " " + etSobrenome.text.toString(),
-                    telefone = etTelefone.text.toString(),
-                    address = Address(
-                        street = etRua.text.toString(),
-                        state = etEstado.text.toString(),
-                        city = etCidade.text.toString()
+            val medico = getMedicoArgs()
+            if(medico != null ){
+                (spinnerEspecialidades.selectedItem as? Especialidade)?.let { especialidade ->
+                    medicoViewModel.editarMedico(
+                        id = medico.id,
+                        especialidade = especialidade,
+                        fullName = etNome.text.toString() + " " + etSobrenome.text.toString(),
+                        telefone = etTelefone.text.toString(),
+                        address = Address(
+                            street = etRua.text.toString(),
+                            state = etEstado.text.toString(),
+                            city = etCidade.text.toString()
+                        )
                     )
-                )
-                createSuccess()
+
+                }
+            }else {
+                (spinnerEspecialidades.selectedItem as? Especialidade)?.let { especialidade ->
+                    medicoViewModel.adicionarMedico(
+                        especialidade = especialidade,
+                        fullName = etNome.text.toString() + " " + etSobrenome.text.toString(),
+                        telefone = etTelefone.text.toString(),
+                        address = Address(
+                            street = etRua.text.toString(),
+                            state = etEstado.text.toString(),
+                            city = etCidade.text.toString()
+                        )
+                    )
+                }
             }
+            clearInputs()
         }
     }
 
-    private fun createSuccess(){
+    private fun clearInputs(){
         with(binding){
             etNome.setText("")
             etSobrenome.setText("")
