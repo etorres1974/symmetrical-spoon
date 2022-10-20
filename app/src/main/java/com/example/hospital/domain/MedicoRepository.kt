@@ -7,16 +7,16 @@ import com.example.hospital.data.medico.MedicoDao
 
 class MedicoRepository(val dao : MedicoDao ) {
 
-    fun getAll() = dao.getAll()
+    suspend fun getAll() = dao.getAll()
 
-    fun adicionar(especialidade: Especialidade, fullName : String, telefone: String?, address: Address?) : List<Medico>{
+    suspend fun adicionar(especialidade: Especialidade, fullName : String, telefone: String?, address: Address?) : List<Medico>{
         val model = Medico.instance(especialidade, fullName, telefone, address)
         dao.insert(model)
         return dao.getAll()
     }
 
 
-    fun editar(id : Int, especialidade: Especialidade, fullName : String, telefone: String?, address: Address?): List<Medico>{
+    suspend fun editar(id : Int, especialidade: Especialidade, fullName : String, telefone: String?, address: Address?): List<Medico>{
         val model = Medico.instance(especialidade, fullName, telefone, address, id = id)
         dao.update(model)
         return dao.getAll()

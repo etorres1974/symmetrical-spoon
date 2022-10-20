@@ -15,11 +15,11 @@
         android:id="@+id/navigation_medico"
         android:name="com.example.hospital.ui.medico.MedicoFragment"
         android:label="@string/title_medico"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_especialidade" />
 
     <fragment
         android:id="@+id/navigation_especialidade"
         android:name="com.example.hospital.ui.especialidade.EspecialidadeFragment"
         android:label="@string/title_especialidade"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_medico" />
 </navigation>

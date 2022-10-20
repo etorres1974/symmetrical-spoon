@@ -1,6 +1,6 @@
 package com.example.hospital.ui.medico
 
-import androidx.lifecycle.LiveData
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,26 +16,29 @@ class MedicoViewModel(
     private val especialidadeRepository: EspecialidadeRepository,
     private val medicoRepository: MedicoRepository
 ) : ViewModel() {
-
-    private val _medico = MutableLiveData<List<Medico>>()
-    val medicoLivedata: LiveData<List<Medico>> = _medico
-
-    private val _especialidades = MutableLiveData<List<Especialidade>>()
-    val especialidadeLivedata: LiveData<List<Especialidade>> = _especialidades
+    companion object {
+        var counter = 0
+    }
 
     init {
-        setupInitialData()
+        counter += 1
+        Log.d("Teste123", counter.toString())
     }
+    val medicoLivedata = MutableLiveData<List<Medico>>()
+    val especialidadeLivedata = MutableLiveData<List<Especialidade>>()
 
     fun adicionarMedico(especialidade: Especialidade, fullName : String, telefone: String?, address: Address?){
         viewModelScope.launch(Dispatchers.IO) {
             medicoRepository.adicionar(especialidade, fullName, telefone, address)
+            medicoLivedata.postValue(medicoRepository.getAll())
         }
     }
 
     fun adicionarEspecialidade(nome : String){
         viewModelScope.launch(Dispatchers.IO) {
             especialidadeRepository.adicionar(nome)
+            val novaLista = especialidadeRepository.getAll()
+            especialidadeLivedata.postValue(novaLista)
         }
     }
 
@@ -63,11 +66,11 @@ class MedicoViewModel(
         }
     }
 
-    private fun setupInitialData(){
+    fun setupInitialData(){
         viewModelScope.launch(Dispatchers.IO) {
             if(medicoRepository.getAll().isEmpty()) {
                 val mockEspecialidades = listOf("Ortopedista", "Cardiologista")
-                val mockMedicos = listOf("Cladio Pereira", "Marcelo Machado")
+                val mockMedicos = listOf("Clxa", "Marcelo Machado")
                 mockEspecialidades.forEachIndexed { index, especialidade ->
                     especialidadeRepository.adicionar(especialidade)
                     medicoRepository.adicionar(
@@ -78,9 +81,9 @@ class MedicoViewModel(
                     )
                 }
             }
-            _medico.postValue(medicoRepository.getAll())
-            _especialidades.postValue(especialidadeRepository.getAll())
+            val medicos = medicoRepository.getAll()
+            medicoLivedata.postValue(medicos)
+            especialidadeLivedata.postValue(especialidadeRepository.getAll())
         }
     }
-
 }

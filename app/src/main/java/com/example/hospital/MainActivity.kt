@@ -7,11 +7,15 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.example.hospital.data.especialidade.Especialidade
 import com.example.hospital.databinding.ActivityMainBinding
+import com.example.hospital.ui.medico.MedicoViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val medicoViewModel: MedicoViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,11 +33,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_medico, R.id.navigation_especialidade
             )
         )
+        medicoViewModel.setupInitialData()
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-    }
-
-    fun initDatabase(){
-        this.applicationContext
     }
 }

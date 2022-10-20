@@ -5,7 +5,7 @@ import androidx.room.*
 @Dao
 interface MedicoDao {
     @Query("SELECT * FROM medico")
-    fun getAll(): List<Medico>
+    suspend fun getAll(): List<Medico>
 
     @Transaction
     @Query("SELECT * FROM Medico")
@@ -23,7 +23,10 @@ interface MedicoDao {
     fun findMedEspec(first: String, last: String): MedicoEspecialidade
 
     @Insert
-    fun insert(vararg medicos: Medico)
+    suspend fun insert(vararg medicos: Medico)
+
+    @Insert
+    fun insert(medico: Medico)
 
     @Delete
     fun delete(medico: Medico)
