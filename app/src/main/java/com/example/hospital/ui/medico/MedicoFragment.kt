@@ -24,18 +24,17 @@ class MedicoFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         binding = FragmentDashboardBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        with(medicoViewModel) {
+            medicoLivedata.observe(viewLifecycleOwner) {
+                binding.textDashboard.text = it.toString()
+            }
+            especialidadeLivedata.observe(viewLifecycleOwner) {
+                setupSpinner(it)
+            }
+        }
 
-        val textView: TextView = binding.textDashboard
-        medicoViewModel.medicoLivedata.observe(viewLifecycleOwner) {
-            textView.text = it.toString()
-        }
-        medicoViewModel.especialidadeLivedata.observe(viewLifecycleOwner){
-            setupSpinner(it)
-        }
-        return root
+        return binding.root
     }
 
     private fun setupSpinner(list : List<Especialidade>){

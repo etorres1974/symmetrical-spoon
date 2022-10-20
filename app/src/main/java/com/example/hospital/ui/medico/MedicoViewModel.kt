@@ -28,7 +28,39 @@ class MedicoViewModel(
     }
 
     fun adicionarMedico(especialidade: Especialidade, fullName : String, telefone: String?, address: Address?){
-        medicoRepository.adicionar(especialidade, fullName, telefone, address)
+        viewModelScope.launch(Dispatchers.IO) {
+            medicoRepository.adicionar(especialidade, fullName, telefone, address)
+        }
+    }
+
+    fun adicionarEspecialidade(nome : String){
+        viewModelScope.launch(Dispatchers.IO) {
+            especialidadeRepository.adicionar(nome)
+        }
+    }
+
+    fun editarMedico(id : Int, especialidade: Especialidade, fullName : String, telefone: String?, address: Address?){
+        viewModelScope.launch(Dispatchers.IO) {
+            medicoRepository.editar(id, especialidade, fullName, telefone, address)
+        }
+    }
+
+    fun editarEspecialidade(especialidade: Especialidade, novoNome : String){
+        viewModelScope.launch(Dispatchers.IO) {
+            especialidadeRepository.editar(especialidade.id, novoNome)
+        }
+    }
+
+    fun removerMedico(id : Int){
+        viewModelScope.launch(Dispatchers.IO) {
+            medicoRepository.remover(id)
+        }
+    }
+
+    fun removerEspecialiadde(id : Int){
+        viewModelScope.launch(Dispatchers.IO) {
+            especialidadeRepository.remover(id)
+        }
     }
 
     private fun setupInitialData(){
