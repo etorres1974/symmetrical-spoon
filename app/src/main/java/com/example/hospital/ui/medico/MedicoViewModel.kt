@@ -1,5 +1,6 @@
 package com.example.hospital.ui.medico
 
+import android.database.sqlite.SQLiteConstraintException
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -52,6 +53,7 @@ class MedicoViewModel(
     fun editarEspecialidade(especialidade: Especialidade, novoNome : String){
         viewModelScope.launch(Dispatchers.IO) {
             especialidadeRepository.editar(especialidade.id, novoNome)
+            especialidadeLivedata.postValue(especialidadeRepository.getAll())
         }
     }
 
@@ -63,9 +65,14 @@ class MedicoViewModel(
         }
     }
 
-    fun removerEspecialiadde(id : Int){
+    fun removerEspecialiadde(id : Int, onError : () -> Unit){
         viewModelScope.launch(Dispatchers.IO) {
-            especialidadeRepository.remover(id)
+            try {
+                especialidadeRepository.remover(id)
+                especialidadeLivedata.postValue(especialidadeRepository.getAll())
+            }catch (e : SQLiteConstraintException){
+                onError()
+            }
         }
     }
 
