@@ -82,4 +82,5 @@ class MedicoViewModel(
             _especialidades.postValue(especialidadeRepository.getAll())
         }
     }
+
 }
