@@ -4,17 +4,12 @@ import android.content.Context
 import android.database.sqlite.SQLiteConstraintException
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
-import androidx.test.espresso.matcher.ViewMatchers.assertThat
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.hospital.data.AppDatabase
 import com.example.hospital.data.especialidade.Especialidade
 import com.example.hospital.data.especialidade.EspecialidadeDao
 import com.example.hospital.data.medico.Medico
-import com.example.hospital.data.user.User
-import com.example.hospital.data.user.UserDao
 import com.example.hospital.domain.EspecialidadeRepository
-import com.example.hospital.domain.MedicoRepository
-import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Before
 import org.junit.Test

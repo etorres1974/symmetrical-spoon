@@ -12,11 +12,11 @@
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.15070921985815602" />
         <entry key="app/src/main/res/layout/fragment_dashboard.xml" value="0.1697061803444782" />
         <entry key="app/src/main/res/layout/fragment_especialidade.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.1828774062816616" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.22" />
         <entry key="app/src/main/res/layout/fragment_medico.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_notifications.xml" value="0.15806159420289856" />
         <entry key="app/src/main/res/layout/item_especialidade.xml" value="0.165" />
-        <entry key="app/src/main/res/layout/item_medico.xml" value="0.21" />
+        <entry key="app/src/main/res/layout/item_medico.xml" value="0.25" />
         <entry key="app/src/main/res/menu/bottom_nav_menu.xml" value="0.1" />
       </map>
     </option>
@@ -26,5 +26,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.21" />
+      </ProjectState>
+    </option>
   </component>
 </project>

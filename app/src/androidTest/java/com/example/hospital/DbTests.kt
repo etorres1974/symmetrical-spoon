@@ -9,7 +9,6 @@ import com.example.hospital.data.AppDatabase
 import com.example.hospital.data.especialidade.Especialidade
 import com.example.hospital.data.medico.Medico
 import com.example.hospital.data.user.User
-import com.example.hospital.data.user.UserDao
 import org.hamcrest.CoreMatchers.equalTo
 import org.junit.After
 import org.junit.Before

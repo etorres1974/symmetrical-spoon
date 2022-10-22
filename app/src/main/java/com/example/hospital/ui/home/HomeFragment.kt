@@ -6,7 +6,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavDirections
@@ -39,13 +42,40 @@ class HomeFragment : Fragment(), MedicoListener {
             especialidadeLivedata.observe(viewLifecycleOwner){
                 adapter.submitEspecialidade(it)
             }
-            medicoLivedata.observe(viewLifecycleOwner) {
+            medicosFiltradosLiveData.observe(viewLifecycleOwner) {
                 binding.rvMedicos.layoutManager = LinearLayoutManager(requireContext() ,LinearLayoutManager.VERTICAL, false)
                 adapter.submit(it)
+                Log.d("Teste123", it.firstOrNull().toString() )
+            }
+            binding.etSearch.addTextChangedListener{
+
+                this.filterMedicos(it?.toString() ?: "")
+            }
+            especialidadeLivedata.observe(viewLifecycleOwner){
+                setupSpinner(it)
+            }
+        }
+        return binding.root
+    }
+
+    private fun setupSpinner(list: List<Especialidade>) {
+        val spinner = binding.spinnerEspecialidades
+        val itens = list.toMutableList().apply {
+            add(0, Especialidade(0, "Filtrar Medico por especialidade"))
+        }
+        spinner.adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, itens)
+
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+                Log.d("Teste123 index", p2.toString())
+                medicoViewModel.selecionarEspecialidadeFiltro(p2)
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {
+                medicoViewModel.selecionarEspecialidadeFiltro(0)
             }
 
         }
-        return binding.root
     }
 
     override fun openEdit(medico: Medico) {

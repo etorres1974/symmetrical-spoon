@@ -36,7 +36,11 @@ data class Address(
     val street: String?,
     val state: String?,
     val city: String?
-)
+){
+    override fun toString(): String {
+        return "$street - $state - $city"
+    }
+}
 
 class MedicoEspecialidade (
     @Embedded val medico: Medico,

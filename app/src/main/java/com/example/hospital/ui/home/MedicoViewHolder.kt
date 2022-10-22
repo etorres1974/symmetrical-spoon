@@ -11,7 +11,10 @@ class MedicoViewHolder(val view: ItemMedicoBinding,val listener : MedicoListener
         val especialidade = especialidades.firstOrNull() { it.id == medico.especId }
         with(view){
             tvNome.text = medico.firstName
+            tvSobrenome.text = medico.lastName
             tvEspec.text = especialidade?.descricao
+            tvFone.text = medico.telefone
+            tvAddress.text = medico.address?.toString() ?: ""
             btnDelete.setOnClickListener { listener.delete(medico) }
             btnEdit.setOnClickListener { listener.openEdit(medico) }
         }

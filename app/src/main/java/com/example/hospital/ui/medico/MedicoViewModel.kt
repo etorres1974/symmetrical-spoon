@@ -2,9 +2,7 @@ package com.example.hospital.ui.medico
 
 import android.database.sqlite.SQLiteConstraintException
 import android.util.Log
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.hospital.data.especialidade.Especialidade
 import com.example.hospital.data.medico.Address
 import com.example.hospital.data.medico.Medico
@@ -26,6 +24,25 @@ class MedicoViewModel(
         Log.d("Teste123", counter.toString())
     }
     val medicoLivedata = MutableLiveData<List<Medico>>()
+    val query = MutableLiveData<String>("")
+    val especQuery = MutableLiveData<Int>(0)
+    val medicosFiltradosLiveData  : LiveData<List<Medico>> = MediatorLiveData<List<Medico>>().apply{
+        var currentQuery = ""
+        var currentList = emptyList<Medico>()
+        var currentEspec = 0
+        addSource(medicoLivedata){
+            currentList = it
+            value = filterMedicos(currentList, currentQuery, currentEspec)
+        }
+        addSource(query){
+            currentQuery = it
+            value = filterMedicos(currentList, currentQuery, currentEspec)
+        }
+        addSource(especQuery){
+            currentEspec = it
+            value = filterMedicos(currentList, currentQuery, currentEspec)
+        }
+    }
     val especialidadeLivedata = MutableLiveData<List<Especialidade>>()
 
     fun adicionarMedico(especialidade: Especialidade, fullName : String, telefone: String?, address: Address?){
@@ -80,7 +97,7 @@ class MedicoViewModel(
         viewModelScope.launch(Dispatchers.IO) {
             if(medicoRepository.getAll().isEmpty()) {
                 val mockEspecialidades = listOf("Ortopedista", "Cardiologista")
-                val mockMedicos = listOf("Clxa", "Marcelo Machado")
+                val mockMedicos = listOf("Pedro Pimenta", "Marcelo Machado")
                 mockEspecialidades.forEachIndexed { index, especialidade ->
                     especialidadeRepository.adicionar(especialidade)
                     medicoRepository.adicionar(
@@ -95,5 +112,23 @@ class MedicoViewModel(
             medicoLivedata.postValue(medicos)
             especialidadeLivedata.postValue(especialidadeRepository.getAll())
         }
+    }
+
+    fun filterMedicos(query: String){
+        viewModelScope.launch(Dispatchers.IO) {
+            this@MedicoViewModel.query.postValue(query)
+        }
+    }
+
+    fun filterMedicos(list: List<Medico>?, query: String, especId : Int): List<Medico> {
+        val byName = list?.filter { it.toString().contains(query, ignoreCase = true) } ?: emptyList<Medico>()
+        return if(especId != 0)
+            byName.filter { it.especId == especId }
+        else
+            byName
+    }
+
+    fun selecionarEspecialidadeFiltro(p2: Int) = viewModelScope.launch(Dispatchers.IO) {
+        especQuery.postValue(p2)
     }
 }

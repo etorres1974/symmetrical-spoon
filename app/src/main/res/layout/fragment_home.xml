@@ -7,6 +7,20 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
+    <Spinner
+        android:layout_margin="5dp"
+        android:id="@+id/spinner_especialidades"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:layout_margin="5dp"
+        android:id="@+id/etSearch"
+        android:hint="Filtrar por ..."
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
