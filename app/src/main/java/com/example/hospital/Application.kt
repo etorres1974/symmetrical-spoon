@@ -2,9 +2,10 @@ package com.example.hospital
 
 import android.app.Application
 import androidx.room.Room
-import com.example.hospital.data.AppDatabase
-import com.example.hospital.data.dataModule
-import com.example.hospital.ui.uiModule
+import com.example.hospital.shared.data.AppDatabase
+import com.example.hospital.shared.data.dataModule
+import com.example.hospital.shared.ui.uiModule
+import com.google.firebase.FirebaseApp
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext.startKoin
@@ -14,7 +15,7 @@ import org.koin.dsl.module
 class Application : Application() {
     override fun onCreate() {
         super.onCreate()
-
+        FirebaseApp.initializeApp(this@Application)
         startKoin{
             androidLogger(Level.DEBUG)
             androidContext(this@Application)

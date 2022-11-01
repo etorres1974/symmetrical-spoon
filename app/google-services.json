@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "207775795111",
+    "project_id": "hospital-fb79a",
+    "storage_bucket": "hospital-fb79a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:207775795111:android:1823f2a6c5601b43831882",
+        "android_client_info": {
+          "package_name": "com.example.hospital"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "207775795111-0a97f4tv3i4qps7l9v8k0r51qjmdrfg1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.hospital",
+            "certificate_hash": "8e09d2c9e4ae6ea69a3cc17c4620317a6631352c"
+          }
+        },
+        {
+          "client_id": "207775795111-r682nlo48408riic0nls09bvpa9d5bj4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB5xvVw3a7qcVOue6oBe5TBsR7ML5FxRTk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "207775795111-r682nlo48408riic0nls09bvpa9d5bj4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

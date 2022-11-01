@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -36,6 +37,9 @@ android {
 }
 
 dependencies {
+    implementation platform('com.google.firebase:firebase-bom:31.0.2')
+    implementation 'com.firebaseui:firebase-ui-auth:7.2.0'
+    implementation 'com.google.firebase:firebase-auth-ktx'
     def roomVersion = "2.4.1"
     def koinVersion = "3.2.2"
     implementation "io.insert-koin:koin-android:$koinVersion"

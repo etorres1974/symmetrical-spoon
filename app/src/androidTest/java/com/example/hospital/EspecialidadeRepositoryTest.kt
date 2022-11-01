@@ -5,11 +5,11 @@ import android.database.sqlite.SQLiteConstraintException
 import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.example.hospital.data.AppDatabase
-import com.example.hospital.data.especialidade.Especialidade
-import com.example.hospital.data.especialidade.EspecialidadeDao
-import com.example.hospital.data.medico.Medico
-import com.example.hospital.domain.EspecialidadeRepository
+import com.example.hospital.shared.data.AppDatabase
+import com.example.hospital.shared.data.especialidade.Especialidade
+import com.example.hospital.shared.data.especialidade.EspecialidadeDao
+import com.example.hospital.shared.data.medico.Medico
+import com.example.hospital.shared.domain.EspecialidadeRepository
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
