@@ -30,10 +30,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     // Choose authentication providers
-    private val providers = arrayListOf(AuthUI.IdpConfig.EmailBuilder().build())
+    private val providers = arrayListOf(AuthUI.IdpConfig.EmailBuilder().build(), AuthUI.IdpConfig.GoogleBuilder().build())
 
     // Create and launch sign-in intent
-    val signInIntent = AuthUI.getInstance()
+    private val signInIntent = AuthUI.getInstance()
         .createSignInIntentBuilder()
         .setAvailableProviders(providers)
         .build()
@@ -49,6 +49,7 @@ class LoginActivity : AppCompatActivity() {
             // sign-in flow using the back button. Otherwise check
             // response.getError().getErrorCode() and handle the error.
             // ...
+            loginException(response?.error)
         }
     }
 
@@ -75,7 +76,7 @@ class LoginActivity : AppCompatActivity() {
                 openApp(currentUser)
             }
         }else {
-            signInLauncher.launch(signInIntent)
+            //signInLauncher.launch(signInIntent)
         }
     }
 
@@ -83,36 +84,49 @@ class LoginActivity : AppCompatActivity() {
 
     private fun setup()= with(binding){
         buttonLogin.setOnClickListener {
-            val email = etUser.text.toString()
-            val password = etPass.text.toString()
-            try {
-                auth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this@LoginActivity) { task ->
-                        if (task.isSuccessful) {
-                            val user = auth.currentUser
-                            if (user != null)
-                                openApp(user)
-                        } else {
-                            loginException(task.exception)
-                        }
-                    }
-            }catch (e : Exception){
-                loginException(e)
-            }
+            //manualLogin()
+            signInLauncher.launch(signInIntent)
+        }
+        buttonGuest.setOnClickListener {
+            openApp(null)
         }
     }
+
+//    fun manualLogin(){
+//        with(binding){
+//            val email = etUser.text.toString()
+//            val password = etPass.text.toString()
+//            try {
+//                auth.signInWithEmailAndPassword(email, password)
+//                    .addOnCompleteListener(this@LoginActivity) { task ->
+//                        if (task.isSuccessful) {
+//                            val user = auth.currentUser
+//                            if (user != null)
+//                                openApp(user)
+//                        } else {
+//                            loginException(task.exception)
+//                        }
+//                    }
+//            }catch (e : Exception){
+//                loginException(e)
+//            }
+//        }
+//    }
 
     private fun loginException(e : Exception?){
         Log.d("Teste123", "signInWithEmail:failure", e)
         Toast.makeText(baseContext, "Authentication failed : ${e?.message}", Toast.LENGTH_SHORT).show()
     }
 
-    private fun openApp(user : FirebaseUser) {
+    private fun openApp(user : FirebaseUser?) {
         val admin = user?.displayName?.contains("admin", true) ?: false
         val activity = if(admin) AdminActivity::class.java else UserActivity::class.java
         val intent = Intent(this, activity).apply {
-            putExtra(USER_EMAIL, user.email)
-            putExtra(USER_NAME, user.displayName)
+            if(user != null) {
+                putExtra(USER_EMAIL, user.email)
+                putExtra(USER_NAME, user.displayName)
+            }
+            putExtra(USER_GUEST, user == null)
         }
         startActivity(intent)
     }
@@ -120,7 +134,6 @@ class LoginActivity : AppCompatActivity() {
     companion object {
         val USER_EMAIL = "UserEmail"
         val USER_NAME = "UserName"
+        val USER_GUEST = "UserIsGuest"
     }
-
-
 }

@@ -49,14 +49,22 @@ class UserActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.navigation_sair -> {
-                AuthUI.getInstance()
-                    .signOut(this)
-                    .addOnCompleteListener {
-                        startActivity(Intent(this, LoginActivity::class.java))
-                    }
+                if(getIsGuest()){
+                    startActivity(Intent(this, LoginActivity::class.java))
+                } else {
+                    AuthUI.getInstance()
+                        .signOut(this)
+                        .addOnCompleteListener {
+                            startActivity(Intent(this, LoginActivity::class.java))
+                        }
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)
         }
     }
+
+    fun getUserName() = this.intent.getStringExtra(LoginActivity.USER_NAME)
+    fun getUserEmail() = this.intent.getStringExtra(LoginActivity.USER_EMAIL)
+    private fun getIsGuest() = this.intent.getBooleanExtra(LoginActivity.USER_GUEST, false)
 }

@@ -4,4 +4,5 @@
     <item
         android:id="@+id/navigation_sair"
         android:title="@string/sair" />
+
 </menu>

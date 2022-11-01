@@ -8,10 +8,13 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.hospital.databinding.FragmentHomeBinding
+import com.example.hospital.databinding.FragmentHomeUserBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class HomeFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentHomeUserBinding? = null
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -22,13 +25,22 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        _binding = FragmentHomeUserBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        setupWelcome()
+    }
 
-        return root
+    private fun setupWelcome(){
+        val user = Firebase.auth.currentUser
+        if(user == null){
+            binding.tvWelcome.text = "Bem vindo Convidado"
+        }else {
+            binding.tvWelcome.text = "Bem vindo ${user?.displayName}"
+        }
     }
 
     override fun onDestroyView() {
