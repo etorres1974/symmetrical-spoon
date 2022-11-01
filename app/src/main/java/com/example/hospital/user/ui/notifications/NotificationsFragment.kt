@@ -35,16 +35,7 @@ class NotificationsFragment : Fragment() {
         notificationsViewModel.text.observe(viewLifecycleOwner) {
             textView.text = it
         }
-        logout()
         return root
-    }
-
-    private fun logout(){
-        AuthUI.getInstance()
-            .signOut(requireContext())
-            .addOnCompleteListener {
-                startActivity(Intent(requireContext(), LoginActivity::class.java))
-            }
     }
 
     override fun onDestroyView() {
