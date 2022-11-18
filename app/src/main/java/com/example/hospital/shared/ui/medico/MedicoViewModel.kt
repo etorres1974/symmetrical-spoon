@@ -108,6 +108,7 @@ class MedicoViewModel(
                     )
                 }
             }
+
             val medicos = medicoRepository.getAll()
             medicoLivedata.postValue(medicos)
             especialidadeLivedata.postValue(especialidadeRepository.getAll())
