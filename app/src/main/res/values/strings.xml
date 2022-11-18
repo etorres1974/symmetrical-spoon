@@ -10,4 +10,5 @@
     <string name="login_social">Login Social</string>
     <string name="entrar_como_convidado">Entrar como convidado</string>
     <string name="login_menu">Login Menu</string>
+    <string name="favoritos">Favoritos</string>
 </resources>

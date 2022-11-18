@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.hospital.databinding.FragmentDashboardBinding
 
-class DashboardFragment : Fragment() {
+class FavoritosFragment : Fragment() {
 
     private var _binding: FragmentDashboardBinding? = null
 
