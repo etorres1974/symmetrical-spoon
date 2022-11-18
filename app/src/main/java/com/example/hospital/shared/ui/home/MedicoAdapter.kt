@@ -8,7 +8,7 @@ import com.example.hospital.shared.data.medico.Medico
 import com.example.hospital.databinding.ItemMedicoBinding
 
 
-class MedicoAdapter( val listener: MedicoListener) :
+class MedicoAdapter( val listener: MedicoListener, val admin:Boolean) :
     RecyclerView.Adapter<MedicoViewHolder>() {
 
     private var dataSet: List<Medico> = emptyList()
@@ -22,7 +22,7 @@ class MedicoAdapter( val listener: MedicoListener) :
         // Create a new view, which defines the UI of the list item
         val inflater = LayoutInflater.from(viewGroup.context)
         val view = ItemMedicoBinding.inflate(inflater, viewGroup, false)
-        return MedicoViewHolder(view, listener)
+        return MedicoViewHolder(view, listener, admin)
     }
 
     // Replace the contents of a view (invoked by the layout manager)

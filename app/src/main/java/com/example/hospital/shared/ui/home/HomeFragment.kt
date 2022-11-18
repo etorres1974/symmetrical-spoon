@@ -23,7 +23,7 @@ class HomeFragment : Fragment(), MedicoListener {
     private  lateinit var binding: FragmentHomeBinding
 
     private val medicoViewModel : MedicoViewModel by sharedViewModel()
-    private val adapter =  MedicoAdapter(this)
+    private val adapter =  MedicoAdapter(this, true)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -81,6 +81,10 @@ class HomeFragment : Fragment(), MedicoListener {
 
     override fun delete(medico: Medico) {
         medicoViewModel.removerMedico(medico.id)
+    }
+
+    override fun favorite(medico: Medico) {
+        TODO("Not yet implemented")
     }
 
     override fun onDestroy() {
