@@ -9,7 +9,8 @@ val uiModule = module {
     viewModel {
         MedicoViewModel(
             especialidadeRepository = get(),
-            medicoRepository = get()
+            medicoRepository = get(),
+            medicoFavoritoRepository = get()
         )
     }
 }

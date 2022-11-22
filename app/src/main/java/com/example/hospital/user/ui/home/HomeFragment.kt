@@ -47,6 +47,9 @@ class HomeFragment : Fragment(), MedicoListener {
             especialidadeLivedata.observe(viewLifecycleOwner){
                 adapter.submitEspecialidade(it)
             }
+            medicoFavoritoLivedata.observe(viewLifecycleOwner){
+                adapter.submitMedicoFavorito(it)
+            }
             medicosFiltradosLiveData.observe(viewLifecycleOwner) {
                 binding.rvMedicos.layoutManager = LinearLayoutManager(requireContext() ,
                     LinearLayoutManager.VERTICAL, false)
@@ -105,10 +108,17 @@ class HomeFragment : Fragment(), MedicoListener {
     }
 
     override fun delete(medico: Medico) {
-        TODO("Not yet implemented")
+        //TODO
     }
 
-    override fun favorite(medico: Medico) {
-        TODO("Not yet implemented")
+    override fun favorite(medico: Medico, favorite:Boolean) {
+        val user = Firebase.auth.currentUser
+        if(!favorite){
+            medicoViewModel.favoritar(user?.uid, medico.id)
+        }
+        else{
+            medicoViewModel.desfavoritar(user?.uid, medico.id)
+        }
+
     }
 }

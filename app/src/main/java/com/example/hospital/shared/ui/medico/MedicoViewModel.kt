@@ -6,22 +6,27 @@ import androidx.lifecycle.*
 import com.example.hospital.shared.data.especialidade.Especialidade
 import com.example.hospital.shared.data.medico.Address
 import com.example.hospital.shared.data.medico.Medico
+import com.example.hospital.shared.data.medico.MedicoFavorito
 import com.example.hospital.shared.domain.EspecialidadeRepository
+import com.example.hospital.shared.domain.MedicoFavoritoRepository
 import com.example.hospital.shared.domain.MedicoRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class MedicoViewModel(
     private val especialidadeRepository: EspecialidadeRepository,
-    private val medicoRepository: MedicoRepository
+    private val medicoRepository: MedicoRepository,
+    private val medicoFavoritoRepository: MedicoFavoritoRepository
 ) : ViewModel() {
     companion object {
         var counter = 0
     }
 
     init {
-        counter += 1
-        Log.d("Teste123", counter.toString())
+        viewModelScope.launch (Dispatchers.IO){
+            medicoFavoritoLivedata.postValue(medicoFavoritoRepository.getAll())
+        }
+
     }
     val medicoLivedata = MutableLiveData<List<Medico>>()
     val query = MutableLiveData<String>("")
@@ -131,5 +136,21 @@ class MedicoViewModel(
 
     fun selecionarEspecialidadeFiltro(p2: Int) = viewModelScope.launch(Dispatchers.IO) {
         especQuery.postValue(p2)
+    }
+
+    val medicoFavoritoLivedata = MutableLiveData<List<MedicoFavorito>>()
+
+    fun favoritar(uid: String?, id: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val favoritos = medicoFavoritoRepository.adicionar(id, uid?:"")
+            medicoFavoritoLivedata.postValue(favoritos)
+        }
+    }
+
+    fun desfavoritar(uid: String?, id: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val favoritos = medicoFavoritoRepository.deletar(id, uid?:"")
+            medicoFavoritoLivedata.postValue(favoritos)
+        }
     }
 }

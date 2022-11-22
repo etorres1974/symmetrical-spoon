@@ -34,6 +34,7 @@ class MedicoRepository(val dao : MedicoDao ) {
         return medicos.filter { it.filterByName(query) || it.filterByPhone(query)}
     }
 
+
     private fun Medico.filterByName(query : String) : Boolean = firstName?.contains(query) ?: false || lastName?.contains(query) ?: false
     private fun Medico.filterByPhone(query: String) : Boolean = telefone?.contains(query) ?: false
 

@@ -35,5 +35,9 @@ class Application : Application() {
         single {
             db.medicoDao()
         }
+
+        single {
+            db.medicoFavoritoDao()
+        }
     }
 }

@@ -6,6 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.hospital.shared.data.especialidade.Especialidade
 import com.example.hospital.shared.data.medico.Medico
 import com.example.hospital.databinding.ItemMedicoBinding
+import com.example.hospital.shared.data.medico.MedicoFavorito
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 
 class MedicoAdapter( val listener: MedicoListener, val admin:Boolean) :
@@ -13,6 +16,7 @@ class MedicoAdapter( val listener: MedicoListener, val admin:Boolean) :
 
     private var dataSet: List<Medico> = emptyList()
     private var especialidades : List<Especialidade> = emptyList()
+    private var medicoFavoritos : List<MedicoFavorito> = emptyList()
 
     // Return the size of your dataset (invoked by the layout manager)
     override fun getItemCount() = dataSet.size
@@ -30,7 +34,12 @@ class MedicoAdapter( val listener: MedicoListener, val admin:Boolean) :
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         val medico = dataSet[position]
-        viewHolder.bind(medico, especialidades)
+        val user = Firebase.auth.currentUser
+        val isFavorite = medicoFavoritos.find {
+            it.medicoId == medico.id && it.usuarioId == user?.uid
+
+        } != null
+        viewHolder.bind(medico, especialidades, isFavorite)
     }
 
 
@@ -43,6 +52,13 @@ class MedicoAdapter( val listener: MedicoListener, val admin:Boolean) :
     fun submitEspecialidade(list: List<Especialidade>?) {
         if(list != null) {
             this.especialidades = list
+            notifyDataSetChanged()
+        }
+    }
+
+    fun submitMedicoFavorito(list: List<MedicoFavorito>?) {
+        if(list != null) {
+            this.medicoFavoritos = list
             notifyDataSetChanged()
         }
     }

@@ -83,9 +83,10 @@ class HomeFragment : Fragment(), MedicoListener {
         medicoViewModel.removerMedico(medico.id)
     }
 
-    override fun favorite(medico: Medico) {
+    override fun favorite(medico: Medico, favorite: Boolean) {
         TODO("Not yet implemented")
     }
+
 
     override fun onDestroy() {
         super.onDestroy()

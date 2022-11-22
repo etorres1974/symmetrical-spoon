@@ -95,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@null"
-                android:src="@drawable/favoritos"/>
+                android:src="@drawable/ic_dashboard_black_24dp"/>
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

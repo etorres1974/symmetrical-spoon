@@ -6,5 +6,5 @@ interface MedicoListener {
 
     fun openEdit(medico: Medico)
     fun delete(medico: Medico)
-    fun favorite(medico: Medico)
+    fun favorite(medico: Medico, favorite:Boolean)
 }
