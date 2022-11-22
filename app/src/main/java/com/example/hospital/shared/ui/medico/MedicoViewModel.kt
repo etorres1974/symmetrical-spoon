@@ -48,6 +48,30 @@ class MedicoViewModel(
             value = filterMedicos(currentList, currentQuery, currentEspec)
         }
     }
+
+    val medicoFavoritoLivedata = MutableLiveData<List<MedicoFavorito>>()
+    val meusMedicosLiveData  : LiveData<List<Medico>> = MediatorLiveData<List<Medico>>().apply{
+        var currentList = emptyList<Medico>()
+        var medicosFavoritos = emptyList<MedicoFavorito>()
+        addSource(medicoLivedata){
+            currentList = it
+            value = filtroFavoritos(currentList, medicosFavoritos)
+        }
+        addSource(medicoFavoritoLivedata){
+            medicosFavoritos = it
+            value = filtroFavoritos(currentList, medicosFavoritos)
+        }
+    }
+
+    private fun filtroFavoritos(currentList: List<Medico>?, medicosFavoritos: List<MedicoFavorito>): List<Medico> {
+
+        return currentList?.filter { medico ->
+            medicosFavoritos.any {it.medicoId == medico.id}
+        }?: emptyList()
+
+    }
+
+
     val especialidadeLivedata = MutableLiveData<List<Especialidade>>()
 
     fun adicionarMedico(especialidade: Especialidade, fullName : String, telefone: String?, address: Address?){
@@ -138,7 +162,7 @@ class MedicoViewModel(
         especQuery.postValue(p2)
     }
 
-    val medicoFavoritoLivedata = MutableLiveData<List<MedicoFavorito>>()
+
 
     fun favoritar(uid: String?, id: Int) {
         viewModelScope.launch(Dispatchers.IO) {

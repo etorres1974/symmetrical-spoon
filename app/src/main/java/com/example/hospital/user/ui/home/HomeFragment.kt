@@ -27,13 +27,6 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class HomeFragment : Fragment(), MedicoListener {
 
     private lateinit var binding: FragmentHomeUserBinding
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-
-
-
-
     private val medicoViewModel : MedicoViewModel by sharedViewModel()
     private val adapter =  MedicoAdapter(this, false)
     override fun onCreateView(

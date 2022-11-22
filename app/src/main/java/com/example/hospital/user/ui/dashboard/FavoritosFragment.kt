@@ -7,36 +7,56 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hospital.databinding.FragmentDashboardBinding
+import com.example.hospital.shared.data.medico.Medico
+import com.example.hospital.shared.ui.home.MedicoAdapter
+import com.example.hospital.shared.ui.home.MedicoListener
+import com.example.hospital.shared.ui.medico.MedicoViewModel
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class FavoritosFragment : Fragment() {
+class FavoritosFragment : Fragment(), MedicoListener {
 
-    private var _binding: FragmentDashboardBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
-
+    private lateinit var binding: FragmentDashboardBinding
+    private val medicoViewModel : MedicoViewModel by sharedViewModel()
+    private val adapter =  MedicoAdapter(this, false)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        val dashboardViewModel =
-            ViewModelProvider(this).get(DashboardViewModel::class.java)
-
-        _binding = FragmentDashboardBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        val textView: TextView = binding.textDashboard
-        dashboardViewModel.text.observe(viewLifecycleOwner) {
-            textView.text = it
+        binding = FragmentDashboardBinding.inflate(inflater, container, false)
+        binding.rvMedicos.adapter = adapter
+        binding.rvMedicos.layoutManager = LinearLayoutManager(requireContext() ,
+            LinearLayoutManager.VERTICAL, false)
+        medicoViewModel.meusMedicosLiveData.observe(viewLifecycleOwner){
+            adapter.submit(it)
         }
-        return root
+        medicoViewModel.medicoFavoritoLivedata.observe(viewLifecycleOwner){
+            adapter.submitMedicoFavorito(it)
+        }
+
+        return binding.root
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    override fun openEdit(medico: Medico) {
+        TODO("Not yet implemented")
     }
+
+    override fun delete(medico: Medico) {
+        TODO("Not yet implemented")
+    }
+
+    override fun favorite(medico: Medico, favorite: Boolean) {
+        val user = Firebase.auth.currentUser
+        if(!favorite){
+            medicoViewModel.favoritar(user?.uid, medico.id)
+        }
+        else{
+            medicoViewModel.desfavoritar(user?.uid, medico.id)
+        }
+    }
+
 }
