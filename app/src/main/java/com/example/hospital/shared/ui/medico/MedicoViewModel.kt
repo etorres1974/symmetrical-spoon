@@ -10,6 +10,8 @@ import com.example.hospital.shared.data.medico.MedicoFavorito
 import com.example.hospital.shared.domain.EspecialidadeRepository
 import com.example.hospital.shared.domain.MedicoFavoritoRepository
 import com.example.hospital.shared.domain.MedicoRepository
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
@@ -66,7 +68,7 @@ class MedicoViewModel(
     private fun filtroFavoritos(currentList: List<Medico>?, medicosFavoritos: List<MedicoFavorito>): List<Medico> {
 
         return currentList?.filter { medico ->
-            medicosFavoritos.any {it.medicoId == medico.id}
+            medicosFavoritos.any {it.medicoId == medico.id && it.usuarioId == Firebase.auth.currentUser?.uid}
         }?: emptyList()
 
     }

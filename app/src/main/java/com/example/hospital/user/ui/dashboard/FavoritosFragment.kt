@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,6 +34,7 @@ class FavoritosFragment : Fragment(), MedicoListener {
             LinearLayoutManager.VERTICAL, false)
         medicoViewModel.meusMedicosLiveData.observe(viewLifecycleOwner){
             adapter.submit(it)
+            binding.textView.isVisible = it.isNullOrEmpty()
         }
         medicoViewModel.medicoFavoritoLivedata.observe(viewLifecycleOwner){
             adapter.submitMedicoFavorito(it)

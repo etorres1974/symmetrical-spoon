@@ -11,4 +11,5 @@
     <string name="entrar_como_convidado">Entrar como convidado</string>
     <string name="login_menu">Login Menu</string>
     <string name="favoritos">Favoritos</string>
+    <string name="sem_favoritos">Você não tem nenhum médico favorito. Favor adicionar.</string>
 </resources>
