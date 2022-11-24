@@ -20,9 +20,6 @@ class MedicoViewModel(
     private val medicoRepository: MedicoRepository,
     private val medicoFavoritoRepository: MedicoFavoritoRepository
 ) : ViewModel() {
-    companion object {
-        var counter = 0
-    }
 
     init {
         viewModelScope.launch (Dispatchers.IO){

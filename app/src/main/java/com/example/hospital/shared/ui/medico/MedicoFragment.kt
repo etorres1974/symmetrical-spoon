@@ -113,6 +113,7 @@ class MedicoFragment : Fragment() {
                 }
             }
             clearInputs()
+            showToast("Médico criado com sucesso!")
         }
     }
 

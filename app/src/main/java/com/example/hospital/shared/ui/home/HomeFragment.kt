@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.core.view.get
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -16,6 +17,8 @@ import com.example.hospital.shared.data.especialidade.Especialidade
 import com.example.hospital.shared.data.medico.Medico
 import com.example.hospital.databinding.FragmentHomeBinding
 import com.example.hospital.shared.ui.medico.MedicoViewModel
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : Fragment(), MedicoListener {
@@ -38,7 +41,6 @@ class HomeFragment : Fragment(), MedicoListener {
             medicosFiltradosLiveData.observe(viewLifecycleOwner) {
                 binding.rvMedicos.layoutManager = LinearLayoutManager(requireContext() ,LinearLayoutManager.VERTICAL, false)
                 adapter.submit(it)
-                Log.d("Teste123", it.firstOrNull().toString() )
             }
             binding.etSearch.addTextChangedListener{
 
@@ -48,6 +50,7 @@ class HomeFragment : Fragment(), MedicoListener {
                 setupSpinner(it)
             }
         }
+        setupWelcome()
         return binding.root
     }
 
@@ -61,7 +64,8 @@ class HomeFragment : Fragment(), MedicoListener {
         spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
                 Log.d("Teste123 index", p2.toString())
-                medicoViewModel.selecionarEspecialidadeFiltro(p2)
+                val item = spinner.selectedItem as? Especialidade
+                medicoViewModel.selecionarEspecialidadeFiltro(item?.id ?: 0)
             }
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
@@ -78,6 +82,13 @@ class HomeFragment : Fragment(), MedicoListener {
         findNavController().navigate(R.id.action_navigation_home_to_navigation_medico, bundle)
 
     }
+
+    private fun setupWelcome(){
+        val user = Firebase.auth.currentUser
+        binding.tvWelcome.text = "Bem vindo Admin ${user?.displayName}"
+
+    }
+
 
     override fun delete(medico: Medico) {
         medicoViewModel.removerMedico(medico.id)

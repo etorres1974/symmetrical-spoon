@@ -62,10 +62,12 @@ class EspecialidadeFragment : Fragment(), EspecialidadeListener {
     }
 
     var edit: Especialidade? = null
-    fun adicionarEspecialidade() {
+    private fun adicionarEspecialidade() {
         edit?.let {
             medicoViewModel.editarEspecialidade(it, binding.etNome.text.toString())
         } ?: medicoViewModel.adicionarEspecialidade(binding.etNome.text.toString())
+        binding.etNome.setText("")
+        showToast("Especialidade Adicionada com Sucesso")
     }
 
     override fun delete(especialidade: Especialidade) {

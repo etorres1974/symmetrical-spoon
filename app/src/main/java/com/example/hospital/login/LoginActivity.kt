@@ -57,7 +57,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        auth = Firebase.auth
         setup()
 
     }
@@ -68,10 +67,10 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun registerFlow(){
-        val currentUser = auth.currentUser
+        val currentUser = Firebase.auth.currentUser
         val isLogged = currentUser != null
         if(isLogged){
-            Log.d("Teste123", currentUser?.log() ?: "Null")
+            Log.d("Teste123 aaa", currentUser?.log() ?: "Null")
             if (currentUser != null) {
                 openApp(currentUser)
             }

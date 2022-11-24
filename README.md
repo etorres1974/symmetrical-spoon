@@ -6,7 +6,10 @@ Lucca D'Amico Diniz
 O app funciona como um software de gestão para um hospital.
 
 ### Papéis :
-Os usuários com papel administrador podem adicionar/editar e excluir medicos e especilidades do banco de dados. Os usuários normais podem favoritar seus médicos de e gerenciar suas preferencias porém não podem alterar dados sobre os médicos/especialidade no banco.
+Os usuários com papel administrador podem adicionar/editar 
+e excluir medicos e especilidades do banco de dados.
+Os usuários normais podem favoritar seus médicos de 
+e gerenciar suas preferencias porém não podem alterar dados sobre os médicos/especialidade no banco.
 
 ### Funcionalidades 
 - Autenticação

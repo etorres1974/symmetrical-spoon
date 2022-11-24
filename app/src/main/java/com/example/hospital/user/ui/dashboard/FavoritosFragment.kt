@@ -36,6 +36,11 @@ class FavoritosFragment : Fragment(), MedicoListener {
             adapter.submit(it)
             binding.textView.isVisible = it.isNullOrEmpty()
         }
+        val isConvidado = Firebase.auth.currentUser == null
+
+        binding.textViewForbidden.isVisible = isConvidado
+        binding.clContent.isVisible = !isConvidado
+
         medicoViewModel.medicoFavoritoLivedata.observe(viewLifecycleOwner){
             adapter.submitMedicoFavorito(it)
         }

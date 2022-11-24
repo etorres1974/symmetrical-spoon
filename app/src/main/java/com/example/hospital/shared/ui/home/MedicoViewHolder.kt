@@ -6,6 +6,8 @@ import com.example.hospital.R
 import com.example.hospital.shared.data.especialidade.Especialidade
 import com.example.hospital.shared.data.medico.Medico
 import com.example.hospital.databinding.ItemMedicoBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class MedicoViewHolder(val view: ItemMedicoBinding, val listener: MedicoListener,val admin: Boolean) : RecyclerView.ViewHolder(view.root) {
 
@@ -26,7 +28,7 @@ class MedicoViewHolder(val view: ItemMedicoBinding, val listener: MedicoListener
             else{
                 btnFavorito.setImageResource(R.drawable.ic_baseline_favorite_24)
             }
-            btnFavorito.isVisible = !admin
+            btnFavorito.isVisible = !admin && Firebase.auth.currentUser != null
             btnDelete.isVisible = admin
             btnEdit.isVisible = admin
         }

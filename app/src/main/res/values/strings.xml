@@ -12,4 +12,6 @@
     <string name="login_menu">Login Menu</string>
     <string name="favoritos">Favoritos</string>
     <string name="sem_favoritos">Você não tem nenhum médico favorito. Favor adicionar.</string>
+    <string name="forbidden">Usuários convidados não podem favoritar, por favor realize o login.</string>
+    <string name="filtrar_por">Filtrar por ...</string>
 </resources>

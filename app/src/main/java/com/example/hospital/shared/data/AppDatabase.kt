@@ -9,7 +9,7 @@ import com.example.hospital.shared.data.medico.MedicoDao
 import com.example.hospital.shared.data.medico.MedicoFavorito
 import com.example.hospital.shared.data.medico.MedicoFavoritoDao
 
-@Database(entities = [Medico::class, Especialidade::class, MedicoFavorito::class], version = 1)
+@Database(entities = [Medico::class, Especialidade::class, MedicoFavorito::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun medicoDao() : MedicoDao
     abstract fun especialidade() : EspecialidadeDao
