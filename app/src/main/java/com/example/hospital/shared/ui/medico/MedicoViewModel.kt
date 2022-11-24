@@ -59,6 +59,7 @@ class MedicoViewModel(
             currentList = it
             value = filtroFavoritos(currentList, medicosFavoritos)
         }
+
         addSource(medicoFavoritoLivedata){
             medicosFavoritos = it
             value = filtroFavoritos(currentList, medicosFavoritos)
